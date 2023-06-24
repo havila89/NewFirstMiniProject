@@ -40,17 +40,17 @@
         [(ngModel)]="location"
         (change)="SelectLocation($event)"
       >
-        <option [ngValue]="'india'">India</option>
+        <option [ngValue]="'India'">India</option>
         <option [ngValue]="'USA'">USA</option>
         <option [ngValue]="'other'">Other</option>
       </select>
       <div>
-        <div *ngIf="location == 'india'">
+        <div *ngIf="location === 'India'">
           <br />
           Pincode <input type="text" id="pincode" />
         </div>
         <div>
-          <div *ngIf="location === 'USA'">
+          <div *ngIf="location !== 'India'">
             <br />
             Zipcode <input type="text" id="zipcode" />
           </div>
