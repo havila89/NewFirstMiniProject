@@ -13,7 +13,7 @@ export class AddressComponent implements OnInit {
   lastname: string = '';
   email: string = '';
   mstatus = '';
-  location = '';
+  location = 'India';
   spousename = '';
 
   constructor() {}
