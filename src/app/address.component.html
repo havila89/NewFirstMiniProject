@@ -1,0 +1,84 @@
+<div *ngIf="!isSubmit">
+  <!--for toggling the form-->
+  <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+    <!--template reference variable that contains all the form data-->
+    <h1>ENTER DETAILS</h1>
+    <hr />
+    First Name
+    <input
+      type="text"
+      name="firstname"
+      [(ngModel)]="this.address.firstname"
+      required
+      minlength="3"
+    />
+
+    <br /><br />
+    Last Name
+    <input
+      type="text"
+      [(ngModel)]="lastname"
+      name="lastname"
+      required
+    /><br /><br />
+    Email &nbsp; &nbsp; &nbsp; &nbsp;
+    <input type="text" name="email" [(ngModel)]="email" required /><br /><br />
+    <!--Marital status-->
+    <div>
+      Married
+      <input
+        type="radio"
+        name="mstatus"
+        [(ngModel)]="mstatus"
+        value="Yes"
+        required
+      />
+      <label for="yes">Yes</label>
+      <input
+        type="radio"
+        name="mstatus"
+        [(ngModel)]="mstatus"
+        value="No"
+        required
+      />
+      <label for="no">No</label>
+      <!--Display only if married status-->
+      <br />
+      <div *ngIf="mstatus == 'Yes'">
+        Spouse Name
+        <input type="text" name="spousename" [(ngModel)]="spousename" />
+      </div>
+    </div>
+    <br /><br />
+    <!--select from dropdown-->
+    <div>
+      <label>Choose Location</label>
+      &nbsp;<select name="location" [(ngModel)]="location" required>
+        <option name="India">India</option>
+        <option name="USA">USA</option>
+        <option name="other">Other</option>
+      </select>
+      <div>
+        <div *ngIf="location === 'India'">
+          <br />
+          Pincode <input type="text" name="pincode" required />
+        </div>
+        <div>
+          <div *ngIf="location !== 'India'">
+            <br />
+            Zipcode <input type="text" name="zipcode" required />
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      <button type="submit" value="submit" [disabled]="!addressForm.valid">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+<!--referencing personal info component here makes it the child component and address component as the parent child-->
+<app-personal-information
+  *ngIf="isSubmit"
+  [formInfo]="addressForm"
+></app-personal-information>
