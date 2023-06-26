@@ -19,10 +19,7 @@ export class AddressComponent implements OnInit {
   addressForm: any;
 
   constructor() {}
-  //show zipcode/pincode based on location
-  SelectLocation($event: any) {
-    return this.location;
-  }
+
   //navigating to another component
   onClickSubmit($event: any) {
     console.log($event);

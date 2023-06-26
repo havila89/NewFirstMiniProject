@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AddressComponent } from '../address/address.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-information',
@@ -12,13 +10,7 @@ export class PersonalInformationComponent {
   lastname: string = '';
   email: string = '';
   mstatus = '';
+  spousename = '';
   location = '';
   @Input() formInfo: any;
-
-  router = new Router();
-
-  //navigating to another component
-  update($event: any) {
-    this.router.navigate(['/personalInfo']);
-  }
 }

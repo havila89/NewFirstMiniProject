@@ -7,9 +7,10 @@ import { AddressComponent } from './address/address.component';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from './page/page.component';
+import { SpouseNamePipe } from './spouse-name.pipe';
 
 @NgModule({
-  declarations: [AppComponent, AddressComponent, PersonalInformationComponent, PageComponent],
+  declarations: [AppComponent, AddressComponent, PersonalInformationComponent, PageComponent, SpouseNamePipe],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

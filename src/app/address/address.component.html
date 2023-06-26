@@ -1,14 +1,11 @@
 <div *ngIf="!isSubmit">
+  <!--for toggling the form-->
   <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+    <!--template reference variable that contains all the form data-->
     <h1>ENTER DETAILS</h1>
     <hr />
     First Name
-    <input
-      type="text"
-      name="firstname"
-      [(ngModel)]="firstname"
-      firstname="name.value"
-    /><br /><br />
+    <input type="text" name="firstname" [(ngModel)]="firstname" /><br /><br />
     Last Name
     <input type="text" [(ngModel)]="lastname" name="lastname" /><br /><br />
     Email &nbsp; &nbsp; &nbsp; &nbsp;
@@ -16,43 +13,35 @@
     <!--Marital status-->
     <div>
       Married
-      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="yes" />
+      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="Yes" />
       <label for="yes">Yes</label>
-      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="no" />
+      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="No" />
       <label for="no">No</label>
       <!--Display only if married status-->
-      <div *ngIf="mstatus === 'yes'">
+      <br />
+      <div *ngIf="mstatus == 'Yes'">
         Spouse Name
-        <input
-          type="text"
-          id="spousename"
-          name="spousename"
-          [(ngModel)]="spousename"
-        />
+        <input type="text" name="spousename" [(ngModel)]="spousename" />
       </div>
     </div>
     <br /><br />
     <!--select from dropdown-->
     <div>
       <label>Choose Location</label>
-      &nbsp;<select
-        name="selectlocations"
-        [(ngModel)]="location"
-        (change)="SelectLocation($event)"
-      >
-        <option [ngValue]="'India'">India</option>
-        <option [ngValue]="'USA'">USA</option>
-        <option [ngValue]="'other'">Other</option>
+      &nbsp;<select name="location" [(ngModel)]="location">
+        <option name="India">India</option>
+        <option name="USA">USA</option>
+        <option name="other">Other</option>
       </select>
       <div>
         <div *ngIf="location === 'India'">
           <br />
-          Pincode <input type="text" id="pincode" />
+          Pincode <input type="text" name="pincode" />
         </div>
         <div>
           <div *ngIf="location !== 'India'">
             <br />
-            Zipcode <input type="text" id="zipcode" />
+            Zipcode <input type="text" name="zipcode" />
           </div>
         </div>
       </div>
@@ -61,6 +50,7 @@
     </div>
   </form>
 </div>
+<!--referencing personal info component here makes it the child component and address component as the parent child-->
 <app-personal-information
   *ngIf="isSubmit"
   [formInfo]="addressForm"
