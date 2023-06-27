@@ -1,0 +1,116 @@
+<div *ngIf="!isSubmit">
+  <!--for toggling the form-->
+  <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+    <!--template reference variable that contains all the form data-->
+    <h1>ENTER DETAILS</h1>
+    <hr />
+    First Name
+    <input
+      type="text"
+      name="firstname"
+      #firstname="ngModel"
+      [(ngModel)]="address!.firstname"
+      required
+      minlength="3"
+    />
+    <div
+      *ngIf="!firstname.valid && (firstname?.dirty || firstname?.touched)"
+      class="error"
+    >
+      <div *ngIf="firstname?.errors?.['required']">First Name is required</div>
+      <div *ngIf="firstname!.errors?.['minlength']">
+        First Name Minimum Length is
+        {{firstname!.errors?.['minlength']?.requiredLength}}
+      </div>
+    </div>
+    <br /><br />
+    Last Name
+    <input
+      type="text"
+      [(ngModel)]="address!.lastname"
+      name="lastname"
+      required
+    /><br /><br />
+    Email &nbsp; &nbsp; &nbsp; &nbsp;
+    <input
+      type="text"
+      email
+      name="email"
+      [(ngModel)]="address!.email"
+      required
+    /><br /><br />
+    <!--Marital status-->
+    <div>
+      Married
+      <input
+        type="radio"
+        name="mstatus"
+        [(ngModel)]="address!.mstatus"
+        value="Yes"
+        required
+      />
+      <label for="yes">Yes</label>
+      <input
+        type="radio"
+        name="mstatus"
+        [(ngModel)]="address!.mstatus"
+        value="No"
+        required
+      />
+      <label for="no">No</label>
+      <!--Display only if married status-->
+      <br />
+      <div *ngIf="address?.mstatus === 'Yes'">
+        Spouse Name
+        <input
+          type="text"
+          name="spousename"
+          [(ngModel)]="address!.spousename"
+        />
+      </div>
+    </div>
+    <br /><br />
+    <!--select from dropdown-->
+    <div>
+      <label>Choose Location</label>
+      &nbsp;<select name="location" [(ngModel)]="address!.location" required>
+        <option name="India">India</option>
+        <option name="USA">USA</option>
+        <option name="other">Other</option>
+      </select>
+      <div>
+        <div *ngIf="address?.location === 'India'">
+          <br />
+          Pincode
+          <input
+            type="text"
+            name="pincode"
+            required
+            [(ngModel)]="address!.areacode"
+          />
+        </div>
+        <div>
+          <div *ngIf="address?.location !== 'India'">
+            <br />
+            Zipcode
+            <input
+              type="text"
+              name="zipcode"
+              required
+              [(ngModel)]="address!.areacode"
+            />
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      <button type="submit" value="submit" [disabled]="!addressForm.valid">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+<!--referencing personal info component here makes it the child component and address component as the parent child-->
+<app-personal-information
+  *ngIf="isSubmit"
+  [formInfo]="addressForm"
+></app-personal-information>
