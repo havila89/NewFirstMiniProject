@@ -1,0 +1,165 @@
+<!--<div *ngIf="!isSubmit" >-->
+<!--for toggling the form-->
+<form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+  <!--template reference variable that contains all the form data-->
+  <h1>ENTER DETAILS</h1>
+  <hr />
+  First Name
+  <input
+    type="text"
+    name="firstname"
+    #firstname="ngModel"
+    [(ngModel)]="address!.firstname"
+    required
+    minlength="3"
+  />
+  <div *ngIf="isSubmit && !firstname.valid" class="error">
+    <div *ngIf="firstname?.errors?.['required']">First Name is required</div>
+    <div *ngIf="firstname!.errors?.['minlength']">
+      First Name Minimum Length is
+      {{firstname!.errors?.['minlength']?.requiredLength}}
+    </div>
+  </div>
+  <br /><br />
+  Last Name
+  <input
+    type="text"
+    #lastname="ngModel"
+    [(ngModel)]="address!.lastname"
+    name="lastname"
+    required
+  />
+  <div *ngIf="isSubmit && !lastname.valid" class="error">
+    <div *ngIf="lastname?.errors?.['required']">Last Name is required</div>
+  </div>
+  <br /><br />
+  Email &nbsp; &nbsp; &nbsp; &nbsp;
+  <input
+    type="text"
+    #email="ngModel"
+    name="email"
+    [(ngModel)]="address!.email"
+    required
+  /><br />
+  <!--email validation-->
+  <div *ngIf="isSubmit && !email.valid">
+    <div *ngIf="email?.errors?.['required']">Email is required</div>
+  </div>
+
+  <br />
+  <!--Marital status-->
+  <div>
+    Married
+    <input
+      type="radio"
+      name="mstatus"
+      #mstatus="ngModel"
+      [(ngModel)]="address!.mstatus"
+      value="Yes"
+      required
+    />
+    <label for="yes">Yes</label>
+    <input
+      type="radio"
+      name="mstatus"
+      [(ngModel)]="address!.mstatus"
+      value="No"
+      required
+    />
+    <label for="no">No</label>
+    <div *ngIf="isSubmit && !mstatus?.valid" class="error">
+      <div *ngIf="mstatus?.errors?.['required']">Status is required</div>
+    </div>
+
+    <!--Display only if married status-->
+    <br />
+    <div *ngIf="address?.mstatus === 'Yes'">
+      Spouse Name
+      <input
+        type="text"
+        #spousename="ngModel"
+        name="spousename"
+        [(ngModel)]="address!.spousename"
+        required
+      />
+      <!--spousename validation-->
+      <div *ngIf="isSubmit && !spousename.valid" class="error">
+        <div *ngIf="spousename?.errors?.['required']">
+          Spouse Name is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+  <!--select from dropdown-->
+  <div>
+    <label>Choose Location</label>
+    &nbsp;<select
+      name="location"
+      [(ngModel)]="address!.location"
+      required
+      #location="ngModel"
+    >
+      <option value="">Select</option>
+      <option value="India">India</option>
+      <option value="USA">USA</option>
+      <option value="other">Other</option>
+    </select>
+    <div *ngIf="isSubmit && !location?.valid" class="error">
+      <div *ngIf="location?.errors?.['required']">Location is required</div>
+    </div>
+    <div>
+      <div *ngIf="address?.location === 'India'">
+        <br />
+        Pincode
+        <input
+          type="text"
+          name="pincode"
+          #pincode="ngModel"
+          [(ngModel)]="address!.areacode"
+          maxlength="6"
+          pattern="[0-9]+"
+          required
+        />
+        <!--pincode validation-->
+        <div *ngIf="isSubmit && !pincode.valid" class="error">
+          <div *ngIf="pincode?.errors?.['required']">Pincode is required</div>
+          <div *ngIf="pincode?.errors?.['maxlength']">Pincode is invalid</div>
+          <div *ngIf="pincode?.errors?.['pattern']">
+            Only numbers are allowed
+          </div>
+        </div>
+      </div>
+      <div *ngIf="address?.location !== 'India'">
+        <br />
+        Zipcode
+        <input
+          type="text"
+          name="zipcode"
+          #zipcode="ngModel"
+          required
+          maxlength="6"
+          pattern="[0-9]+"
+          [(ngModel)]="address!.areacode"
+        />
+        <!--zipcode validation-->
+        <div *ngIf="isSubmit && !zipcode.valid" class="error">
+          <div *ngIf="zipcode?.errors?.['required']">Zipcode is required</div>
+          <div *ngIf="zipcode?.errors?.['maxlength']">Zipcode is invalid</div>
+          <div *ngIf="zipcode?.errors?.['pattern']">
+            Only numbers are allowed
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <button type="submit" value="submit">Submit</button>
+  </div>
+</form>
+<!--</div>
+referencing personal info component here makes it the child component and address component as the parent child-->
+<app-personal-information
+  *ngIf="isSubmit && addressForm.valid"
+  [formInfo]="addressForm"
+>
+</app-personal-information>
