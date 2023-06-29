@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,17 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./address.component.css'],
 })
 export class AddressComponent implements OnInit {
+  @ViewChild('contactForm') addressForm: NgForm | undefined;
+
   //initializing variables
   router = new Router();
-  firstname: string = '';
+  /*firstname: string = '';
   lastname: string = '';
   email: string = '';
   mstatus = '';
   location = 'India';
-  spousename = '';
+  spousename = '';*/
   isSubmit = false;
-  addressForm: any;
-
+  // addressForm: any;
+  address: Address | undefined;
   constructor() {}
 
   //navigating to another component
@@ -31,5 +34,24 @@ export class AddressComponent implements OnInit {
     this.isSubmit = true;
     this.addressForm = addressForm.value;
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.address = {
+      firstname: '',
+      lastname: '',
+      email: '',
+      mstatus: '',
+      spousename: '',
+      location: '',
+    };
+  }
+}
+export class Address {
+  //interface or model
+  firstname: string | undefined;
+  lastname: string | undefined;
+  email: string | undefined;
+  mstatus?: string | undefined;
+  spousename?: string | undefined;
+  location: string | undefined;
+  areacode?: number | undefined;
 }

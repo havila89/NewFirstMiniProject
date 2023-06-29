@@ -1,3 +1,6 @@
 .add_style {
   text-align: center;
 }
+.error {
+  color: red;
+}

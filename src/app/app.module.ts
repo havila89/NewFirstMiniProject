@@ -8,9 +8,12 @@ import { PersonalInformationComponent } from './personal-information/personal-in
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from './page/page.component';
 import { SpouseNamePipe } from './spouse-name.pipe';
+import { LoginComponent } from './login/login.component';
+import { PermanentaddressComponent } from './permanentaddress/permanentaddress.component';
+import { CurrentaddressComponent } from './currentaddress/currentaddress.component';
 
 @NgModule({
-  declarations: [AppComponent, AddressComponent, PersonalInformationComponent, PageComponent, SpouseNamePipe],
+  declarations: [AppComponent, AddressComponent, PersonalInformationComponent, PageComponent, SpouseNamePipe, LoginComponent, PermanentaddressComponent, CurrentaddressComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

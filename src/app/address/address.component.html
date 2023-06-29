@@ -5,48 +5,182 @@
     <h1>ENTER DETAILS</h1>
     <hr />
     First Name
-    <input type="text" name="firstname" [(ngModel)]="firstname" /><br /><br />
+    <input
+      type="text"
+      name="firstname"
+      #firstname="ngModel"
+      [(ngModel)]="address!.firstname"
+      required
+      minlength="3"
+    />
+    <div
+      *ngIf="!firstname.valid && (firstname?.dirty || firstname?.touched)"
+      class="error"
+    >
+      <div *ngIf="firstname?.errors?.['required']">First Name is required</div>
+      <div *ngIf="firstname!.errors?.['minlength']">
+        First Name Minimum Length is
+        {{firstname!.errors?.['minlength']?.requiredLength}}
+      </div>
+    </div>
+    <br /><br />
     Last Name
-    <input type="text" [(ngModel)]="lastname" name="lastname" /><br /><br />
+    <input
+      type="text"
+      #lastname="ngModel"
+      [(ngModel)]="address!.lastname"
+      name="lastname"
+      required
+    />
+    <div
+      *ngIf="!lastname.valid && (lastname?.dirty || lastname?.touched)"
+      class="error"
+    >
+      <div *ngIf="lastname?.errors?.['required']">Last Name is required</div>
+    </div>
+    <br /><br />
     Email &nbsp; &nbsp; &nbsp; &nbsp;
-    <input type="text" name="email" [(ngModel)]="email" /><br /><br />
+    <input
+      type="email"
+      #email="ngModel"
+      name="email"
+      [(ngModel)]="address!.email"
+      required
+      pattern="[\w-\.]+@([\w-]+\.)+.([\w-]{2-3})$"
+    /><br />
+    <!--email validation-->
+    <div *ngIf="!email.valid && (email?.dirty || email?.touched)" class="error">
+      <div *ngIf="email?.errors?.['required']">Email is required</div>
+      <div *ngIf="email?.errors?.['pattern']">Enter a valid email address</div>
+    </div>
+
+    <br />
     <!--Marital status-->
     <div>
       Married
-      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="Yes" />
+      <input
+        type="radio"
+        name="mstatus"
+        #mstatus="ngModel"
+        [(ngModel)]="address!.mstatus"
+        value="Yes"
+        required
+      />
       <label for="yes">Yes</label>
-      <input type="radio" name="mstatus" [(ngModel)]="mstatus" value="No" />
+      <input
+        type="radio"
+        name="mstatus"
+        [(ngModel)]="address!.mstatus"
+        value="No"
+        required
+      />
       <label for="no">No</label>
+      <div
+        *ngIf="!mstatus?.valid && (mstatus?.dirty || mstatus?.touched)"
+        class="error"
+      >
+        <div *ngIf="mstatus?.errors?.['required']">Status is required</div>
+      </div>
+
       <!--Display only if married status-->
       <br />
-      <div *ngIf="mstatus == 'Yes'">
+      <div *ngIf="address?.mstatus === 'Yes'">
         Spouse Name
-        <input type="text" name="spousename" [(ngModel)]="spousename" />
+        <input
+          type="text"
+          #spousename="ngModel"
+          name="spousename"
+          [(ngModel)]="address!.spousename"
+          required
+        />
+        <!--spousename validation-->
+        <div
+          *ngIf="
+            !spousename.valid && (spousename?.dirty || spousename?.touched)
+          "
+          class="error"
+        >
+          <div *ngIf="spousename?.errors?.['required']">
+            Spouse Name is required
+          </div>
+        </div>
       </div>
     </div>
     <br /><br />
     <!--select from dropdown-->
     <div>
       <label>Choose Location</label>
-      &nbsp;<select name="location" [(ngModel)]="location">
-        <option name="India">India</option>
-        <option name="USA">USA</option>
-        <option name="other">Other</option>
+      &nbsp;<select
+        name="location"
+        [(ngModel)]="address!.location"
+        required
+        #location="ngModel"
+      >
+        <option value="">Select</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="other">Other</option>
       </select>
+      <div
+        *ngIf="!location?.valid && (location?.dirty || location?.touched)"
+        class="error"
+      >
+        <div *ngIf="location?.errors?.['required']">Location is required</div>
+      </div>
       <div>
-        <div *ngIf="location === 'India'">
+        <div *ngIf="address?.location === 'India'">
           <br />
-          Pincode <input type="text" name="pincode" />
+          Pincode
+          <input
+            type="text"
+            name="pincode"
+            #pincode="ngModel"
+            [(ngModel)]="address!.areacode"
+            maxlength="6"
+            pattern="[0-9]+"
+            required
+          />
+          <!--pincode validation-->
+          <div
+            *ngIf="!pincode.valid && (pincode?.dirty || pincode?.touched)"
+            class="error"
+          >
+            <div *ngIf="pincode?.errors?.['required']">Pincode is required</div>
+            <div *ngIf="pincode?.errors?.['maxlength']">Pincode is invalid</div>
+            <div *ngIf="pincode?.errors?.['pattern']">
+              Only numbers are allowed
+            </div>
+          </div>
         </div>
-        <div>
-          <div *ngIf="location !== 'India'">
-            <br />
-            Zipcode <input type="text" name="zipcode" />
+        <div *ngIf="address?.location !== 'India'">
+          <br />
+          Zipcode
+          <input
+            type="text"
+            name="zipcode"
+            #zipcode="ngModel"
+            required
+            maxlength="6"
+            pattern="[0-9]+"
+            [(ngModel)]="address!.areacode"
+          />
+          <!--zipcode validation-->
+          <div
+            *ngIf="!zipcode.valid && (zipcode?.dirty || zipcode?.touched)"
+            class="error"
+          >
+            <div *ngIf="zipcode?.errors?.['required']">Zipcode is required</div>
+            <div *ngIf="zipcode?.errors?.['maxlength']">Zipcode is invalid</div>
+            <div *ngIf="zipcode?.errors?.['pattern']">
+              Only numbers are allowed
+            </div>
           </div>
         </div>
       </div>
       <br /><br />
-      <button type="submit" value="submit">Submit</button>
+      <button type="submit" value="submit" [disabled]="!addressForm.valid">
+        Submit
+      </button>
     </div>
   </form>
 </div>

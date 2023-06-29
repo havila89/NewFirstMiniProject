@@ -1,0 +1,44 @@
+<div>
+  <form>
+    <h1>LOGIN PAGE</h1>
+    <hr />
+    <br />
+    <br />
+    User Name
+    <input
+      type="text"
+      #userName="ngModel"
+      name="username"
+      [(ngModel)]="userLogin.name"
+      required
+      value="JaneDoe"
+    />
+    <br />
+    <!--validation for username-->
+    <div
+      *ngIf="userName.invalid && (userName?.dirty || userName?.touched)"
+      class="error"
+    >
+      <div *ngIf="userName.errors?.['required']"></div>
+      User Name is required
+    </div>
+
+    <br />
+    Password&nbsp;&nbsp;&nbsp;
+    <input
+      type="password"
+      #pwd="ngModel"
+      [(ngModel)]="userLogin!.pwd"
+      name="password"
+      required
+    />
+    <!--password validation-->
+    <div *ngIf="pwd.dirty || pwd.touched" class="error">
+      <div *ngIf="pwd.errors?.['required']" class="error">
+        Password is required
+      </div>
+    </div>
+    <br /><br />
+    <button type="submit" value="submit">Login</button>
+  </form>
+</div>
